@@ -34,7 +34,13 @@ export default function Header({ username }: HeaderProps) {
 
   return (
     <>
-      <AppBar position="fixed" color="primary" elevation={2}>
+      <AppBar
+        position="fixed"
+        elevation={2}
+        sx={{
+          background: "linear-gradient(90deg, #84c6fc, #1e88e5, #1565c0)",
+        }}
+      >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box display="flex" alignItems="center" gap={1}>
             <img
