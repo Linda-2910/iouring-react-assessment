@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# Login and CRUD Operations with Fetch API
+## Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a simple React application demonstrating:
+- User authentication (mock login)
+- CRUD operations using Fetch API
+- State management with Redux Toolkit
+- UI built with Material UI (MUI)
+- Routing handled by React Router v6
 
-Currently, two official plugins are available:
+All API calls interact with the [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) , a fake REST API used for prototyping and testing.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+### Login
+- Username and password fields with validation
+- Error shown for empty inputs
+- Stores username in Redux and persists it in localStorage
+- Navigates to the Posts page after successful login
 
-## React Compiler
+### Posts Page
+- Displays posts fetched from https://jsonplaceholder.typicode.com/posts
+- Includes:
+   - Header with logo, username, and logout button
+   - Scrollable post list (with title, body, user ID)
+   - Create, Edit, and Delete dialogs
+   - Footer with contact and copyright info
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### CRUD Operations
 
-## Expanding the ESLint configuration
+- Create (POST) – Adds a new post using fetch, updates Redux store instantly
+- Read (GET) – Loads all posts from API on mount
+- Update (PUT) – Edits post via API and updates Redux store
+- Delete (DELETE) – Removes post after confirmation
+- Toast notifications for success/error states
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
+| **Category**        | **Tools / Libraries**                      |
+|----------------------|---------------------------------------------|
+| Frontend             | React, TypeScript                          |
+| Build Tool           | Vite                                       |
+| State Management     | Redux Toolkit                              |
+| UI Components        | Material UI (MUI), MUI Lab                 |
+| Routing              | React Router v6                            |
+| API                  | JSONPlaceholder                            |
+| Notifications        | react-toastify                             |
+| Loader               | Custom HOC with MUI Skeleton               |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Folder Structure
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+ src/
+ ├── components/
+ │   ├── Header/
+ │   ├── Footer/
+ │   ├── PostCard/
+ │   ├── PostList/
+ │   └── CreatePostDialog/
+ ├── context/
+ ├── hoc/
+ ├── pages/
+ ├── redux/
+ ├── services/
+ ├── styles/
+ ├── App.tsx
+ ├── main.tsx
+ └── index.html
 ```
+## How to Run
+### Install dependencies
+``` npm install ```
+
+### Run the app
+``` npm run dev ```
+
+### Build for production
+``` npm run build ```
+
+## Redux Setup Summary
+
+- **Store**: Configured using configureStore() from Redux Toolkit
+- **Slice(slice.ts)**:
+   - list – stores all posts
+   - addPost, updatePost, deletePost, setPosts reducers
+- RootState and AppDispatch exported for type safety
+- **Provider** wraps app in main.tsx
