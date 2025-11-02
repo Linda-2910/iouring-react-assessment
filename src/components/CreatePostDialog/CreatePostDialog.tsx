@@ -24,12 +24,8 @@ export default function CreatePostDialog({
   });
 
   const handleChange = (field: string, value: string | number) => {
-    // For userId, prevent negative numbers
     if (field === "userId" && typeof value === "number" && value < 0) return;
-
     setForm({ ...form, [field]: value });
-
-    // Clear error as user types
     setErrors({ ...errors, [field]: false });
   };
 
@@ -39,17 +35,12 @@ export default function CreatePostDialog({
       body: !form.body.trim(),
       userId: form.userId <= 0,
     };
-
     setErrors(newErrors);
-
-    // Stop submit if errors exist
     if (Object.values(newErrors).some(Boolean)) return;
 
     onCreate(form);
     setForm({ title: "", body: "", userId: 1 });
   };
-
-  // Disable Create if fields empty
   const isDisabled =
     !form.title.trim() || !form.body.trim() || form.userId <= 0;
 
